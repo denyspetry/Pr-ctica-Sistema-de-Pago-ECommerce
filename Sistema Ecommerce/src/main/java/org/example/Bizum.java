@@ -8,8 +8,6 @@ public class Bizum extends MetodoPago{
     private String telefono;
     private int pin;
 
-
-
     public void procesarPago(double importe) {
         System.out.println("Procesando pago de " + importe + " € con Bizum");
     }
