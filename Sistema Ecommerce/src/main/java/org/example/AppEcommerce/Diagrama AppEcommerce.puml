@@ -1,0 +1,71 @@
+@startuml
+
+abstract class MetodoPago {
+    + procesarPago(double importe)
+}
+
+class PayPal {
+    - cuenta: String
+    - saldo: double
+    - static FORMATO_CORREO: String
+    - static SALDO_DEF: double
+    + PayPal()
+    + procesarPago(double importe)
+    + validarPayPal(String cuenta, double importe)
+    - cuentaValida(String cuenta): boolean
+    - importeValido(double importe): boolean
+    - anyadirDinero(double dineroAnyadido)
+    + preguntarSaldo()
+    + getCuenta(): String
+    + setCuenta(String cuenta)
+    + getSaldo(): double
+    + setSaldo(double saldo)
+}
+
+class TarjetaCredito {
+    - nro_tarjeta: String
+    - tipo: String
+    - static TIPOS_DEF: String[]
+    - static FORMATO_NUMERO_TARJETA: String
+    + TarjetaCredito()
+    + procesarPago(double importe)
+    + validarTarjeta(String numero, String tipo)
+    - numeroValido(String numero): boolean
+    - tipoValido(String tipo): boolean
+    + getTipo(): String
+    + setTipo(String tipo)
+    + getNro_tarjeta(): String
+    + setNro_tarjeta(String nro_tarjeta)
+}
+
+class Bizum {
+    - telefono: String
+    - pin: int
+    - static FORMATO_TELEFONO: String
+    + Bizum()
+    + procesarPago(double importe)
+    + validarBizum(String telefono, int pinUsuario)
+    - telefonoValido(String telefono): boolean
+    - pinValido(int pinUsuario): boolean
+    - generarPin(): int
+    + getTelefono(): String
+    + setTelefono(String telefono)
+    + getPin(): int
+    + setPin(int pin)
+}
+
+class Tienda {
+    - static metodo: MetodoPago
+    - static importe: double
+    + static iniciarPago()
+    + static realizarPago(MetodoPago metodo, double importe)
+    - static introducirImporte()
+}
+
+MetodoPago <|-- PayPal
+MetodoPago <|-- TarjetaCredito
+MetodoPago <|-- Bizum
+
+Tienda o-- MetodoPago
+
+@enduml
